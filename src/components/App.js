@@ -29,7 +29,7 @@ function App() {
 
   return (
     <div id="main">
-      <input id="text" value={text} onChange={itemEvent}></input>
+      <input id="task" value={text} onChange={itemEvent}></input>
       <button id="btn" onClick={addElement}>
         Add
       </button>
@@ -39,8 +39,12 @@ function App() {
           return (
             <div className="list">
               {el.text}
-              <button onClick={() => handleEdit(el.id)}>Edit</button>
-              <button onClick={() => handleDelete(el.id)}>Delete</button>
+              <button className="edit" onClick={() => handleEdit(el.id)}>
+                Edit
+              </button>
+              <button className="delete" onClick={() => handleDelete(el.id)}>
+                Delete
+              </button>
             </div>
           );
         })}
