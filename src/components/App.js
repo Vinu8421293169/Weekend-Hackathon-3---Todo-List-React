@@ -29,8 +29,13 @@ function App() {
 
   return (
     <div id="main">
-      <input id="task" value={text} onChange={itemEvent}></input>
-      <button id="btn" onClick={addElement}>
+      <input
+        className="editTask"
+        id="task"
+        value={text}
+        onChange={itemEvent}
+      ></input>
+      <button className="saveTask" id="btn" onClick={addElement}>
         Add
       </button>
       <div id="task">
