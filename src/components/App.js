@@ -39,12 +39,8 @@ function App() {
           return (
             <div className="list">
               {el.text}
-              <button id="btn" onClick={() => handleEdit(el.id)}>
-                Edit
-              </button>
-              <button id="btn" onClick={() => handleDelete(el.id)}>
-                Delete
-              </button>
+              <button onClick={() => handleEdit(el.id)}>Edit</button>
+              <button onClick={() => handleDelete(el.id)}>Delete</button>
             </div>
           );
         })}
