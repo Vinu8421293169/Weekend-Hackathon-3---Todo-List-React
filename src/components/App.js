@@ -64,7 +64,7 @@ function App() {
           item.id = index;
           return (
             <div key={item.id + item.text} className="list">
-              {item.text}
+              <div>{item.text}</div>
               <button className="edit" onClick={() => handleEdit(item.id)}>
                 Edit
               </button>
