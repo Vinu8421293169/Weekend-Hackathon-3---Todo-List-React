@@ -21,6 +21,7 @@ function App() {
   const handleDelete = (id) => {
     const itemsCopy = items.filter((el) => el.id !== id);
     setItems(itemsCopy);
+    setText("");
   };
 
   const handleEdit = (id) => {
@@ -62,7 +63,7 @@ function App() {
         {items.map((item, index) => {
           item.id = index;
           return (
-            <div className="list">
+            <div key={item.id + item.text} className="list">
               {item.text}
               <button className="edit" onClick={() => handleEdit(item.id)}>
                 Edit
