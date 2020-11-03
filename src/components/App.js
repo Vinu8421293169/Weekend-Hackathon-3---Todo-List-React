@@ -24,7 +24,27 @@ function App() {
   };
 
   const handleEdit = (id) => {
-    const itemsCopy = items.filter((el) => el.id === id);
+    const itemsCopy = [...items];
+    itemsCopy.forEach((item) => {
+      if (item.id === id) {
+        item.edit = !item.edit;
+        if (item.edit) setText(item.text);
+        else setText("");
+      }
+    });
+    setItems(itemsCopy);
+  };
+
+  const handleSave = (id) => {
+    const itemsCopy = [...items];
+    itemsCopy.forEach((item) => {
+      if (item.id === id && text !== "") {
+        item.text = text;
+        item.edit = false;
+        setText("");
+      }
+    });
+    setItems(itemsCopy);
   };
 
   return (
@@ -35,21 +55,29 @@ function App() {
         value={text}
         onChange={itemEvent}
       ></input>
-      <button className="saveTask" id="btn" onClick={addElement}>
+      <button id="btn" onClick={addElement}>
         Add
       </button>
       <div id="task">
-        {items.map((el, index) => {
-          el.id = index;
+        {items.map((item, index) => {
+          item.id = index;
           return (
             <div className="list">
-              {el.text}
-              <button className="edit" onClick={() => handleEdit(el.id)}>
+              {item.text}
+              <button className="edit" onClick={() => handleEdit(item.id)}>
                 Edit
               </button>
-              <button className="delete" onClick={() => handleDelete(el.id)}>
+              <button className="delete" onClick={() => handleDelete(item.id)}>
                 Delete
               </button>
+              {item.edit && (
+                <button
+                  className="saveTask"
+                  onClick={() => handleSave(item.id)}
+                >
+                  Save
+                </button>
+              )}
             </div>
           );
         })}
