@@ -1,6 +1,6 @@
 import React from "react";
 import "./../styles/App.css";
-import ListView from "./ListView";
+import ListView from "./listView";
 
 export default function App() {
   const [newItem, setNewItem] = React.useState("");

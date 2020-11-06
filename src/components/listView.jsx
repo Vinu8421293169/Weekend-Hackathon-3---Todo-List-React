@@ -1,5 +1,5 @@
 import React from "react";
-import EditBox from "./EditBox";
+import EditBox from "./editTask";
 
 export default function ListView({
   task,
@@ -13,7 +13,7 @@ export default function ListView({
 }) {
   return (
     <>
-      <li className="list">
+      <div className="list">
         {!edit ? (
           task
         ) : (
@@ -23,7 +23,7 @@ export default function ListView({
             saveEditToDo={saveEditToDo}
           />
         )}
-      </li>
+      </div>
       <button className="edit" style={{ margin: "5px" }} onClick={handleEdit}>
         Edit
       </button>
