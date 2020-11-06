@@ -8,7 +8,7 @@ export default function TaskView({
 }) {
   return (
     <>
-      <div key={item.id + item.text} className="list">
+      <li className="list">
         <div>{item.text}</div>
         <button className="edit" onClick={() => handleEdit(item.id)}>
           Edit
@@ -21,7 +21,7 @@ export default function TaskView({
             Save
           </button>
         )}
-      </div>
+      </li>
     </>
   );
 }

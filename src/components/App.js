@@ -59,17 +59,15 @@ function App() {
         id="task"
         className="saveTask"
       ></EditTask>
-      {items.map((item, index) => {
-        item.id = index;
-        return (
-          <TaskView
-            item={item}
-            handleDelete={handleDelete}
-            handleEdit={handleEdit}
-            handleSave={handleSave}
-          ></TaskView>
-        );
-      })}
+      {items.map((item, index) => (
+        <TaskView
+          key={index}
+          item={item}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+          handleSave={handleSave}
+        ></TaskView>
+      ))}
     </div>
   );
 }
