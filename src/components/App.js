@@ -57,7 +57,7 @@ function App() {
         itemEvent={itemEvent}
         addElement={addElement}
         id="task"
-        className=""
+        className="saveTask"
       ></EditTask>
       {items.map((item, index) => {
         item.id = index;
