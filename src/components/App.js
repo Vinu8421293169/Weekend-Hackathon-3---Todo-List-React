@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./../styles/App.css";
+import EditTask from "./editTask";
+import TaskView from "./taskView";
 
 function App() {
   const [text, setText] = useState("");
@@ -50,39 +52,24 @@ function App() {
 
   return (
     <div id="main">
-      <input
-        className="editTask"
+      <EditTask
+        text={text}
+        itemEvent={itemEvent}
+        addElement={addElement}
         id="task"
-        value={text}
-        onChange={itemEvent}
-      ></input>
-      <button id="btn" onClick={addElement}>
-        Add
-      </button>
-      <div id="task">
-        {items.map((item, index) => {
-          item.id = index;
-          return (
-            <div key={item.id + item.text} className="list">
-              <div>{item.text}</div>
-              <button className="edit" onClick={() => handleEdit(item.id)}>
-                Edit
-              </button>
-              <button className="delete" onClick={() => handleDelete(item.id)}>
-                Delete
-              </button>
-              {item.edit && (
-                <button
-                  className="saveTask"
-                  onClick={() => handleSave(item.id)}
-                >
-                  Save
-                </button>
-              )}
-            </div>
-          );
-        })}
-      </div>
+        className=""
+      ></EditTask>
+      {items.map((item, index) => {
+        item.id = index;
+        return (
+          <TaskView
+            item={item}
+            handleDelete={handleDelete}
+            handleEdit={handleEdit}
+            handleSave={handleSave}
+          ></TaskView>
+        );
+      })}
     </div>
   );
 }
