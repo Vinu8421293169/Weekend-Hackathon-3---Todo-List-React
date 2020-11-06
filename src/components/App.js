@@ -1,75 +1,84 @@
-import React, { useState } from "react";
+import React from "react";
 import "./../styles/App.css";
-import EditTask from "./editTask";
-import TaskView from "./taskView";
+import ListView from "./ListView";
 
-function App() {
-  const [text, setText] = useState("");
-  const [items, setItems] = useState([]);
+export default function App() {
+  const [newItem, setNewItem] = React.useState("");
+  const [editIndex, setEditIndex] = React.useState("-1");
+  const [editItem, setEditItem] = React.useState("");
+  const [list, setList] = React.useState([]);
 
-  const itemEvent = (event) => {
-    setText(event.target.value);
+  const addToDo = () => {
+    let newToDo = newItem;
+    if (newToDo === "") {
+      return;
+    }
+    let presentTask = list.map((item) => item.task);
+    if (presentTask.includes(newToDo)) {
+      setEditItem("");
+      return;
+    }
+    let newToDoObj = {
+      task: newToDo,
+      edit: false
+    };
+    let newList = [...list, newToDoObj];
+    setList(newList);
+    setNewItem("");
   };
 
-  const addElement = () => {
-    setItems((oldItems) => {
-      return text === "" || text === " "
-        ? [...oldItems]
-        : [...oldItems, { text }];
-    });
-    setText("");
+  const handleChange = (event) => {
+    setNewItem(event.target.value);
   };
 
-  const handleDelete = (id) => {
-    const itemsCopy = items.filter((el) => el.id !== id);
-    setItems(itemsCopy);
-    setText("");
+  const handleEditChange = (event) => {
+    setEditItem(event.target.value);
   };
 
-  const handleEdit = (id) => {
-    const itemsCopy = [...items];
-    itemsCopy.forEach((item) => {
-      if (item.id === id) {
-        item.edit = !item.edit;
-        if (item.edit) setText(item.text);
-        else setText("");
-      }
-    });
-    setItems(itemsCopy);
+  const saveEditToDo = () => {
+    let listToEdit = [...list];
+    listToEdit[editIndex].task = editItem;
+    listToEdit[editIndex].edit = false;
+    setList(listToEdit);
+    setEditIndex(-1);
+    setEditItem("");
   };
 
-  const handleSave = (id) => {
-    const itemsCopy = [...items];
-    itemsCopy.forEach((item) => {
-      if (item.id === id && text !== "") {
-        item.text = text;
-        item.edit = false;
-        setText("");
-      }
-    });
-    setItems(itemsCopy);
+  const handleDelete = (index) => {
+    let listToUpdate = [...list];
+    listToUpdate.splice(index, 1);
+    setList(listToUpdate);
+  };
+
+  const handleEdit = (index) => {
+    let editObj = list[index];
+    editObj.edit = true;
+    let newEditList = [...list];
+    newEditList[index] = editObj;
+    setEditIndex(index);
+    setList(newEditList);
   };
 
   return (
     <div id="main">
-      <EditTask
-        text={text}
-        itemEvent={itemEvent}
-        addElement={addElement}
-        id="task"
-        className="saveTask"
-      ></EditTask>
-      {items.map((item, index) => (
-        <TaskView
+      <input type="string" id="task" onChange={handleChange} value={newItem} />
+      <button style={{ margin: "5px" }} id="btn" onClick={addToDo}>
+        Add
+      </button>
+      <br />
+      {list.map((item, index) => (
+        <ListView
+          task={item.task}
+          edit={item.edit}
           key={index}
-          item={item}
-          handleDelete={handleDelete}
-          handleEdit={handleEdit}
-          handleSave={handleSave}
-        ></TaskView>
+          serial={index}
+          editItem={editItem}
+          handleEditChange={handleEditChange}
+          saveEditToDo={saveEditToDo}
+          handleDelete={() => handleDelete(index)}
+          handleEdit={() => handleEdit(index)}
+        />
       ))}
     </div>
   );
 }
-
-export default App;
